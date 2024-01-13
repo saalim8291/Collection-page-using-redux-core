@@ -13,3 +13,10 @@ export const selectedProducts = (product) => {
     payload: product,
   };
 };
+
+export const viewProductDetails = (productDetails) => {
+  return {
+    type: ActionTypes.VIEW_PRODUCT_DETAILS,
+    payload: productDetails,
+  };
+};

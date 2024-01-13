@@ -16,3 +16,15 @@ export const productReducer = (state = initialState, action) => {
       return state;
   }
 };
+
+export const viewProductDetailsReducer = (state = {}, action) => {
+  switch (action.type) {
+    case ActionTypes.VIEW_PRODUCT_DETAILS:
+      return {
+        // ...state,
+        ...action.payload,
+      };
+    default:
+      return state;
+  }
+};
