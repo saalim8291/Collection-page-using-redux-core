@@ -1,30 +1,25 @@
-import React, { useEffect } from "react";
-import axios from "axios";
+import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { viewProductDetails } from "../redux/actions/productActions";
+import {
+  removeViewedProduct,
+  viewProduct,
+} from "../redux/actions/productActions";
 
 const ProductDetail = () => {
   const { productId } = useParams();
 
   const dispatch = useDispatch();
 
-  const product = useSelector((state) => state.viewProductDetails);
+  const product = useSelector((state) => state.products.viewProduct);
 
   const { image, title, price, category, description } = product;
 
   useEffect(() => {
-    const fetchProductDetails = async () => {
-      const { data } = await axios
-        .get(`https://fakestoreapi.com/products/${productId}`)
-        .catch((err) => console.error(err, "error"));
-      dispatch(viewProductDetails(data));
-    };
-
-    if (productId) fetchProductDetails();
+    if (productId) dispatch(viewProduct(productId));
 
     return () => {
-      dispatch(viewProductDetails({}));
+      dispatch(removeViewedProduct());
     };
   }, [productId]);
 
@@ -35,9 +30,11 @@ const ProductDetail = () => {
       ) : (
         <div className="ui placeholder segment">
           <div className="ui two column stackable center aligned grid">
-            <div className="ui vertical divider">AND</div>
             <div className="middle aligned row">
-              <div className="column lp">
+              <div
+                className="column lp"
+                style={{ borderRight: "2px solid rgba(34,36,38,.15)" }}
+              >
                 <img src={image} alt="" className="ui fluid image" />
               </div>
               <div className="column rp">
